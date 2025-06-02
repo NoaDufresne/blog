@@ -1,3 +1,7 @@
+body {
+  background-color:rgb(19, 19, 19);
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,27 +9,6 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #fff1f9b3);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
@@ -33,11 +16,75 @@
   }
 }
 
-.card {
-  padding: 2em;
-  gap: 30px;
-}
 
 .button {
   margin: none;
+}
+
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3vh;
+  margin-top: 30px;
+}
+
+
+h1 {
+  color: azure;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3vh;
+}
+
+.article-card {
+  flex: 1 0 300px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.custom-card .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  text-align: left;
+}
+
+/* Comment container with spacing and separator */
+.commentContainer {
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgb(193, 193, 193);
+  font-size: 0.85rem;
+  color: #f63838;
+}
+
+/* Each comment in a rectangle */
+.commentItem {
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  border-radius: 6px;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgb(255, 188, 188);
+}
+
+.commentItem {
+  border: 2px dashed red !important;
 }
