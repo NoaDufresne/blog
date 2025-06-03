@@ -8,14 +8,10 @@ body {
   text-align: center;
 }
 
-html, body, #root, .app-wrapper {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+.app-wrapper {
+  background-color: white;
+  min-height: 100vh; /* pour que ça remplisse toute la hauteur */
 }
-
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
@@ -64,12 +60,7 @@ h1 {
 
 }
 
-.article-card {
-  width: 100%; 
-  max-width: none; 
-  display: flex;
-  flex-direction: column;
-}
+
 
 .custom-card .ant-card-body {
   display: block; 
@@ -92,7 +83,6 @@ h1 {
   margin-bottom: 1rem;
 }
 
-/* Only apply the border when comments exist */
 .card-content.with-divider {
   border-bottom: 1px solid rgba(203, 203, 203, 0.337);
 }
@@ -107,13 +97,18 @@ h1 {
 
 .commentItem {
   margin-top: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.6rem;
   background-color: rgba(255, 255, 255, 0.914) ;
   border-radius: 6px;
   text-align: left;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: rgb(29, 29, 29);
   border: 0.5px solid rgb(146, 146, 146) ;
+}
+
+.commentContainer .commentItem p {
+  margin: 0;
+  padding: 0;
 }
 
 .custom-collapse .ant-collapse-header {
@@ -182,3 +177,8 @@ h1 {
   background: #ffffff;
 }
 
+.custom-card {
+  border: 1px solid #ddd !important;
+  border-radius: 8px;
+  overflow: hidden;
+}

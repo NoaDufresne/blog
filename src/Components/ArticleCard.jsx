@@ -56,7 +56,6 @@ export default function ArticleCard(props) {
         {comments && comments.length > 0 && (
           <Collapse
             ghost
-            style={{ marginTop: '1rem' }}
             expandIconPosition="end"
             className="custom-collapse"
             items={[

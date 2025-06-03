@@ -50,6 +50,7 @@ const ArticleModal = (props) => {
           Valider
         </Button>
       }
+      width={800}
     >
       <ArticleForm title={title} content={content} handleChange={handleChange} />
     </Modal>

@@ -19,6 +19,7 @@ export default function ArticleForm({ title, content, handleChange }) {
         aria-label="Content"
         value={content}
         onChange={handleChange}
+        rows={6}
       />
     </form>
   );

@@ -65,7 +65,7 @@ function App() {
     <div className="app-wrapper">
       <header className="blog-header">
         <div className="logo-title">
-          <h1>Noa's Blog</h1>
+          <h1>Noa's travel blog</h1>
         </div>
         <div className="header-actions">
           <Button
