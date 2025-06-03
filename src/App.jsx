@@ -25,6 +25,7 @@ function App() {
   });
 
   useEffect(() => {
+    document.title = "Noa's travel blog";
     getArticles(posts => {
       setArticles(posts);
       setLoading(false);
