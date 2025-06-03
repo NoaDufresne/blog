@@ -1,51 +1,82 @@
-import React from 'react'
-import {DeleteOutlined,EditOutlined, CommentOutlined} from '@ant-design/icons'
-import {Card } from 'antd'
-import { Popconfirm } from "antd";
-
+import React from 'react';
+import { DeleteOutlined, EditOutlined, CommentOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
+import { Card, Popconfirm, Collapse } from 'antd';
 
 export default function ArticleCard(props) {
+  const {
+    id,
+    title,
+    content,
+    comments,
+    isFavorite,
+    onToggleFavorite,
+    handleEdit,
+    handleDelete,
+    handleComment,
+  } = props;
+
+  const label = (
+    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+      {`${comments.length} Comment${comments.length > 1 ? 's' : ''}`}
+    </div>
+  );
+
   return (
     <div>
       <Card
         className="custom-card"
-        title={<div style={{ textAlign: 'center' }}>{props.title}</div>}
+        title={<div style={{ textAlign: 'center' }}>{title}</div>}
         bordered={false}
-        style={{ width: 300 }}
+        style={{
+          width: 450,
+          border: isFavorite ? '0.8px solid #fadb14' : 'none',
+          borderRadius: 8,
+        }}
         actions={[
-          <EditOutlined onClick={() => props.handleEdit(props.id)} />,
+          <span key="fav" onClick={() => onToggleFavorite(id)} style={{ cursor: 'pointer' }}>
+            {isFavorite ? <StarFilled style={{ color: '#fadb14' }} /> : <StarOutlined />}
+          </span>,
+          <EditOutlined key="edit" onClick={() => handleEdit(id)} />,
           <Popconfirm
+            key="delete"
             title="Are you sure to delete this article?"
-            onConfirm={() => props.handleDelete(props.id)}
+            onConfirm={() => handleDelete(id)}
             okText="Yes"
             cancelText="No"
           >
             <DeleteOutlined />
           </Popconfirm>,
-          <CommentOutlined onClick={() => props.handleComment(props.id)} />,
+          <CommentOutlined key="comment" onClick={() => handleComment(id)} />,
         ]}
       >
-        {/* Align content to the left */}
-        <div className="card-content">
-          <p>{props.content}</p>
+        <div className={`card-content ${comments && comments.length > 0 ? 'with-divider' : ''}`}>
+          <p>{content}</p>
         </div>
 
-        {/* Comments */}
-        {props.comments && props.comments.length > 0 && (
-          <div className="commentContainer">
-            <strong style={{ color: '#aaa' }}>Comments:</strong>
-            {props.comments.map((comment, index) => (
-              <div key={index} className="commentItem">
-                <p>{comment}</p>
-              </div>
-            ))}
-          </div>
+        {comments && comments.length > 0 && (
+          <Collapse
+            ghost
+            style={{ marginTop: '1rem' }}
+            expandIconPosition="end"
+            className="custom-collapse"
+            items={[
+              {
+                key: '1',
+                label,
+                children: (
+                  <div className="commentContainer">
+                    {comments.map((comment, index) => (
+                      <div key={index} className="commentItem">
+                        <p>{comment}</p>
+                      </div>
+                    ))}
+                  </div>
+                ),
+              },
+            ]}
+          />
         )}
       </Card>
-
-
     </div>
-  )
-  
+  );
 }
-

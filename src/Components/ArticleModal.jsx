@@ -3,7 +3,6 @@ import { Button, Modal } from 'antd';
 import ArticleForm from './ArticleForm';
 import { addArticle, updateArticle } from '../Fire';
 
-
 const ArticleModal = (props) => {
   const [title, setTitle] = useState(props.selectedArticle ? props.selectedArticle.title : '');
   const [content, setContent] = useState(props.selectedArticle ? props.selectedArticle.content : '');

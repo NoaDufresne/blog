@@ -1,37 +1,52 @@
 import React, { useState } from 'react';
-import { Modal, Input, Button } from 'antd';
+import { Modal, Input, Button, message } from 'antd';
 import { updateArticle } from '../Fire';
 
 export default function CommentModal(props) {
   const [comment, setComment] = useState('');
-  const handleSubmit = () => {
-    let article = {
-      "id": props.selectedArticle.id,
-      "title": props.selectedArticle.title,
-      "content": props.selectedArticle.content,
-      "createdAt": props.selectedArticle.createdAt,
-      "comments": props.selectedArticle.comments
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!comment.trim()) {
+      message.warning('Please enter a comment before sending.');
+      return;
     }
-    article.comments.push(comment)
-    updateArticle(article)
+
+    setLoading(true);
+
+    try {
+      const article = {
+        ...props.selectedArticle,
+        comments: [...(props.selectedArticle.comments || []), comment],
+      };
+
+      await updateArticle(article);
+
+      setComment('');
+      props.handleClose(); // close the modal after submission
+    } catch (error) {
+      message.error('Failed to add comment. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Modal
-      title="Add a comment"
+      title="Add a Comment"
       open={props.isVisible}
       onCancel={props.handleClose}
       footer={[
-        <Button key="submit" type="primary" onClick={() => handleSubmit()}>
+        <Button key="submit" type="primary" onClick={handleSubmit} loading={loading}>
           Send
         </Button>
       ]}
     >
-      <Input
+      <Input.TextArea
         placeholder="Your comment"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        rows={2}
+        rows={3}
       />
     </Modal>
   );

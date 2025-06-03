@@ -4,7 +4,11 @@ import ArticleModal from './Components/ArticleModal';
 import CommentModal from './Components/CommentModal';
 import { getArticles, deleteArticle } from './Fire';
 import { Spin, Button, Input, FloatButton } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import ArticleCard from './Components/ArticleCard';
+import CustomCarousel from './Components/Carousel';
+import { SearchOutlined } from '@ant-design/icons';
+
 
 function App() {
   const [isArticleModalVisible, setIsArticleModalVisible] = useState(false);
@@ -14,6 +18,11 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Favorites…
+  const [favoriteIds, setFavoriteIds] = useState(() => {
+    const stored = localStorage.getItem('favoriteArticles');
+    return stored ? JSON.parse(stored) : [];
+  });
 
   useEffect(() => {
     getArticles(posts => {
@@ -22,19 +31,105 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('favoriteArticles', JSON.stringify(favoriteIds));
+  }, [favoriteIds]);
+
+  const toggleFavorite = id => {
+    setFavoriteIds(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    );
+  };
+
+  const filteredAndSortedArticles = articles
+    .filter(a =>
+      a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      a.content.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      const aFav = favoriteIds.includes(a.id);
+      const bFav = favoriteIds.includes(b.id);
+      if (aFav && !bFav) return -1;
+      if (!aFav && bFav) return 1;
+      return 0;
+    });
+
+  // Example carousel images—swap these out as you like
+  const heroImages = [
+    'https://source.unsplash.com/800x300/?travel,beach',
+    'https://source.unsplash.com/800x300/?mountains',
+    'https://source.unsplash.com/800x300/?city,night',
+  ];
+
   return (
-    <>
-      <h1>Noa's Blog</h1>
+    <div className="app-wrapper">
+      <header className="blog-header">
+        <div className="logo-title">
+          <h1>Noa's Blog</h1>
+        </div>
+        <div className="header-actions">
+          <Button
+            className='button-create'
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => {
+              setIsArticleModalVisible(true);
+              setSelectedArticle(null);
+            }}
+          >
+            Write an article
+          </Button>
+          <Input
+            placeholder="Search articles..."
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            style={{ width: 250 }}
+            prefix={<SearchOutlined style={{ color: 'rgb(191, 191, 191)' }} />}
+          />
+
+        </div>
+      </header>
+
       <FloatButton>A</FloatButton>
-      <Button type="primary" onClick={() => { setIsArticleModalVisible(true); setSelectedArticle(null); }}>
-        Open Modal
-      </Button>
-      <Input
-        placeholder="Search articles..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ width: 300, marginBottom: '20px' }}
-      />
+
+      {/* ← Here’s your carousel! */}
+      <CustomCarousel images={heroImages} />
+
+      <main className="main-content">
+        <div className="container">
+          {loading ? (
+            <Spin />
+          ) : filteredAndSortedArticles.length === 0 ? (
+            <p className="no-articles">No articles found.</p>
+          ) : (
+            filteredAndSortedArticles.map(article => (
+              <ArticleCard
+                className="custom-card"
+                key={article.id}
+                id={article.id}
+                title={article.title}
+                content={article.content}
+                comments={article.comments}
+                isFavorite={favoriteIds.includes(article.id)}
+                onToggleFavorite={toggleFavorite}
+                setIsArticleModalVisible={setIsArticleModalVisible}
+                handleDelete={() => {
+                  setSelectedArticle(article);
+                  deleteArticle(article);
+                }}
+                handleComment={() => {
+                  setSelectedArticle(article);
+                  setIsCommentModalVisible(true);
+                }}
+                handleEdit={() => {
+                  setSelectedArticle(article);
+                  setIsArticleModalVisible(true);
+                }}
+              />
+            ))
+          )}
+        </div>
+      </main>
 
       {isArticleModalVisible && (
         <ArticleModal
@@ -44,50 +139,16 @@ function App() {
           handleClose={() => setIsArticleModalVisible(false)}
         />
       )}
+
       {isCommentModalVisible && (
-      <CommentModal
-        selectedArticle={selectedArticle}
-        isVisible={isCommentModalVisible}
-        handleClose={() => setIsCommentModalVisible(false)}
-        handleSubmit={() => setIsCommentModalVisible(false)}
-      />)}
-
-      <div className='container'>
-        {loading ? (
-          <Spin />
-        ) : (
-          articles
-            .filter(article =>
-              article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              article.content.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .map(article => (
-              <ArticleCard
-                key={article.id}
-                id={article.id}
-                title={article.title}
-                content={article.content}
-                comments={article.comments}
-                setIsArticleModalVisible={setIsArticleModalVisible}
-                handleDelete={() => {
-                  setSelectedArticle(article);
-                  deleteArticle(article);
-                }}
-                handleComment={() => {
-                  setSelectedArticle(article);
-                  setIsCommentModalVisible(true);
-                }
-                }
-                handleEdit={() => {
-                  setSelectedArticle(article);
-                  setIsArticleModalVisible(true);
-                }}
-
-              />
-            ))
-        )}
-      </div>
-    </>
+        <CommentModal
+          selectedArticle={selectedArticle}
+          isVisible={isCommentModalVisible}
+          handleClose={() => setIsCommentModalVisible(false)}
+          handleSubmit={() => setIsCommentModalVisible(false)}
+        />
+      )}
+    </div>
   );
 }
 

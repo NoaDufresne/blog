@@ -7,16 +7,16 @@ export default function ArticleForm({ title, content, handleChange }) {
       <label htmlFor="title">Titre</label>
       <Input
         name="title"
-        placeholder="Le titre de mon article"
-        aria-label="Titre"
+        placeholder="Article title"
+        aria-label="Title"
         value={title}
         onChange={handleChange}
       />
       <label htmlFor="content">Contenu</label>
       <Input.TextArea
         name="content"
-        placeholder="Le contenu de mon article..."
-        aria-label="Contenu"
+        placeholder="Content of my article..."
+        aria-label="Content"
         value={content}
         onChange={handleChange}
       />

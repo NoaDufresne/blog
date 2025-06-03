@@ -1,12 +1,19 @@
 body {
-  background-color:rgb(19, 19, 19);
+  background-color:rgb(255, 255, 255);
 }
 
 #root {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+}
+
+html, body, #root, .app-wrapper {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -17,74 +24,161 @@ body {
 }
 
 
-.button {
-  margin: none;
-}
-
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3vh;
-  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 2.5rem; 
+  max-width: 1280px;
+  padding: 2rem;
 }
 
 
 h1 {
-  color: azure;
+  color: rgb(41, 41, 41);
 }
 
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3vh;
+.button-create {
+  background-color: #22456d; 
+  border-color: #0e1c2b;
+  color: white;
+  border-radius: 4px;
+  margin: 0;
+}
+
+.button-create:focus {
+  background-color: #01ff38;
+  border-color: #325c8b;
+  color: white;
+    border-radius: 4px;
+
+}
+
+.search-field {
+  border: solid 1px #22456d;
+  background-color: rgba(255, 255, 255, 0.618);
+}
+
+.search-field:hover {
+    border: solid 1px #416b9a;
+
 }
 
 .article-card {
-  flex: 1 0 300px;
-  max-width: 300px;
+  width: 100%; 
+  max-width: none; 
   display: flex;
   flex-direction: column;
-}
-
-.custom-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
 }
 
 .custom-card .ant-card-body {
-  flex: 1;
-  display: flex;
+  display: block; 
   flex-direction: column;
+  padding: 16px; 
+}
+
+.custom-card.favorite-card {
+  box-shadow:
+    4px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid #fff4aa; 
 }
 
 .card-content {
-  flex: 1;
-  display: flex;
   text-align: left;
+  white-space: normal; 
+  overflow-wrap: break-word;
+  word-break: break-word;
+  display: block; 
+  margin-bottom: 1rem;
 }
 
-/* Comment container with spacing and separator */
+/* Only apply the border when comments exist */
+.card-content.with-divider {
+  border-bottom: 1px solid rgba(203, 203, 203, 0.337);
+}
+
+
 .commentContainer {
   margin-top: 1rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid rgb(193, 193, 193);
-  font-size: 0.85rem;
-  color: #f63838;
+  padding: 0.9rem;
+  background-color: #c6c6c612;
+  border-radius: 6px;
 }
 
-/* Each comment in a rectangle */
 .commentItem {
   margin-top: 0.5rem;
-  padding: 0.6rem;
-  background-color: rgba(255, 255, 255, 0.07) !important;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.914) ;
   border-radius: 6px;
   text-align: left;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgb(255, 188, 188);
+  color: rgb(29, 29, 29);
+  border: 0.5px solid rgb(146, 146, 146) ;
 }
 
-.commentItem {
-  border: 2px dashed red !important;
+.custom-collapse .ant-collapse-header {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 0 !important;
+  width: auto !important;
+  justify-content: flex-start !important;
 }
+
+.custom-collapse .ant-collapse-arrow {
+  margin: 0 !important; 
+}
+
+
+.blog-header {
+  width: 100%;                  
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.67);
+  backdrop-filter: blur(10px);         
+  -webkit-backdrop-filter: blur(10px); 
+  border: 1px solid rgba(255, 255, 255, 0.3); 
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  padding: 1.2rem;
+}
+
+.logo-title h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.main-content {
+  max-width: 1280px;
+  padding: 2rem;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.top-controls {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+
+.ant-carousel .slick-dots li button {
+  background: #aaa;
+}
+
+.ant-carousel .slick-dots li.slick-active button {
+  background: #ffffff;
+}
+
