@@ -18,7 +18,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Favorites…
+  // les Favorites ici
   const [favoriteIds, setFavoriteIds] = useState(() => {
     const stored = localStorage.getItem('favoriteArticles');
     return stored ? JSON.parse(stored) : [];
@@ -36,26 +36,35 @@ function App() {
     localStorage.setItem('favoriteArticles', JSON.stringify(favoriteIds));
   }, [favoriteIds]);
 
-  const toggleFavorite = id => {
+  const toggleFavorite = (id) => {
+    const scrollY = window.scrollY;
+
     setFavoriteIds(prev =>
       prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
     );
+
+    setTimeout(() => {
+      window.scrollTo({ top: scrollY, behavior: 'auto' });
+    }, 0);
   };
 
-  const filteredAndSortedArticles = articles
-    .filter(a =>
-      a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      a.content.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) => {
-      const aFav = favoriteIds.includes(a.id);
-      const bFav = favoriteIds.includes(b.id);
-      if (aFav && !bFav) return -1;
-      if (!aFav && bFav) return 1;
-      return 0;
-    });
 
-  // Example carousel images—swap these out as you like
+    const filteredAndSortedArticles = articles
+      .filter(a => 
+        a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        a.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (Array.isArray(a.tags) && a.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
+      )
+      .sort((a, b) => {
+        const aFav = favoriteIds.includes(a.id);
+        const bFav = favoriteIds.includes(b.id);
+        if (aFav && !bFav) return -1;
+        if (!aFav && bFav) return 1;
+        return 0;
+      });
+
+
+
   const heroImages = [
     'https://source.unsplash.com/800x300/?travel,beach',
     'https://source.unsplash.com/800x300/?mountains',
@@ -91,9 +100,11 @@ function App() {
         </div>
       </header>
 
-      <FloatButton>A</FloatButton>
+      <FloatButton.BackTop 
+        tooltip="Back to top"
+        className="custom-float-button" />
 
-      {/* ← Here’s your carousel! */}
+      {}
       <CustomCarousel images={heroImages} />
 
       <main className="main-content">
@@ -101,7 +112,7 @@ function App() {
           {loading ? (
             <Spin />
           ) : filteredAndSortedArticles.length === 0 ? (
-            <p className="no-articles">No articles found.</p>
+            <p className="no-articles">No articles yet :(</p>
           ) : (
             filteredAndSortedArticles.map(article => (
               <ArticleCard
@@ -111,6 +122,8 @@ function App() {
                 title={article.title}
                 content={article.content}
                 comments={article.comments}
+                createdAt={article.createdAt} 
+                tags={article.tags}
                 isFavorite={favoriteIds.includes(article.id)}
                 onToggleFavorite={toggleFavorite}
                 setIsArticleModalVisible={setIsArticleModalVisible}

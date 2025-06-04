@@ -39,3 +39,4 @@ export const updateArticle = article => {
 export const deleteArticle = article => {
   deleteDoc(doc(db, 'articles', article.id))
 }
+

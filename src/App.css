@@ -10,7 +10,7 @@ body {
 
 .app-wrapper {
   background-color: white;
-  min-height: 100vh; /* pour que ça remplisse toute la hauteur */
+  min-height: 100vh; 
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -22,12 +22,16 @@ body {
 
 
 .container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 2.5rem; 
-  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-width: 900px;
+  margin: 0 auto;
   padding: 2rem;
+  width: 100%;
 }
+
+
 
 
 h1 {
@@ -42,14 +46,6 @@ h1 {
   margin: 0;
 }
 
-.button-create:focus {
-  background-color: #01ff38;
-  border-color: #325c8b;
-  color: white;
-    border-radius: 4px;
-
-}
-
 .search-field {
   border: solid 1px #22456d;
   background-color: rgba(255, 255, 255, 0.618);
@@ -57,7 +53,6 @@ h1 {
 
 .search-field:hover {
     border: solid 1px #416b9a;
-
 }
 
 
@@ -76,11 +71,11 @@ h1 {
 
 .card-content {
   text-align: left;
-  white-space: normal; 
   overflow-wrap: break-word;
   word-break: break-word;
   display: block; 
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
+  padding: 20px;
 }
 
 .card-content.with-divider {
@@ -181,4 +176,37 @@ h1 {
   border: 1px solid #ddd !important;
   border-radius: 8px;
   overflow: hidden;
+  width: 100%;
+}
+
+.custom-float-button .ant-float-btn-body {
+  background-color: #22456d ;
+  color: white;
+}
+
+.custom-float-button .ant-float-btn-body .anticon {
+  color: white;
+}
+
+.custom-float-button .ant-float-btn-body:hover {
+  background-color: #6c8baf;
+}
+
+.article-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.article-card-title {
+  margin: 0;
+  flex-grow: 1;
+}
+
+.article-card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
 }

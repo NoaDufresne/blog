@@ -23,7 +23,7 @@ export default function CommentModal(props) {
       await updateArticle(article);
 
       setComment('');
-      props.handleClose(); // close the modal after submission
+      props.handleClose();
     } catch (error) {
       message.error('Failed to add comment. Please try again.');
     } finally {
