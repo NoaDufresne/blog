@@ -100,9 +100,7 @@ h1 {
 
 
 .commentContainer {
-  margin-top: 1rem;
-  padding: 0.9rem;
-  background-color: #c6c6c612;
+  padding: 0.5rem;
   border-radius: 6px;
 }
 
@@ -117,6 +115,8 @@ h1 {
   border: 0.5px solid rgb(146, 146, 146) ;
 }
 
+
+
 .commentContainer .commentItem p {
   margin: 0;
   padding: 0;
@@ -126,13 +126,14 @@ h1 {
   display: inline-flex !important;
   align-items: center;
   gap: 8px;
-  padding: 0 !important;
+  padding: 1rem !important;
   width: auto !important;
   justify-content: flex-start !important;
 }
 
 .custom-collapse .ant-collapse-arrow {
   margin: 0 !important; 
+  color: #283cb9 !important;
 }
 
 
