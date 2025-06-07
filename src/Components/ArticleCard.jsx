@@ -51,7 +51,6 @@ export default function ArticleCard(props) {
         bordered={false}
         style={{
           width: '100%',
-          border: isFavorite ? '0.8px solid #fadb14' : 'none',
           borderRadius: 8,
         }}
         actions={[
@@ -83,7 +82,6 @@ export default function ArticleCard(props) {
           </div>
         }
       >
-        {/* Display image if available */}
         {imageUrl && (
           <div style={{ marginBottom: 12 }}>
             <img

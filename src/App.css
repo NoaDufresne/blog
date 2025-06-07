@@ -33,8 +33,6 @@ body {
 }
 
 
-
-
 h1 {
   color: rgb(41, 41, 41);
 }
@@ -86,11 +84,6 @@ h1 {
   padding: 16px; 
 }
 
-.custom-card.favorite-card {
-  box-shadow:
-    4px 10px rgba(0, 0, 0, 0.2);
-    border: 2px solid #fff4aa; 
-}
 
 .card-content {
   text-align: left;

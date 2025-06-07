@@ -5,7 +5,7 @@ export default function ArticleForm({ title, content, handleChange, titleError, 
   return (
     <Form layout="vertical">
       <Form.Item
-        label="Titre"
+        label="Title"
         validateStatus={titleError ? 'error' : ''}
         help={titleError ? 'You must enter a title.' : ''}
       >
@@ -19,7 +19,7 @@ export default function ArticleForm({ title, content, handleChange, titleError, 
       </Form.Item>
 
       <Form.Item
-        label="Contenu"
+        label="Content"
         validateStatus={contentError ? 'error' : ''}
         help={contentError ? 'You must enter some content.' : ''}
       >

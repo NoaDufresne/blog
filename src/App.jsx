@@ -111,7 +111,7 @@ function App() {
           {loading ? (
             <Spin />
           ) : filteredAndSortedArticles.length === 0 ? (
-            <p className="no-articles">No articles yet :(</p>
+            <p className="no-articles">No articles :(</p>
           ) : (
             filteredAndSortedArticles.map(article => (
               <ArticleCard
