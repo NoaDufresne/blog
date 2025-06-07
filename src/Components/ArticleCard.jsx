@@ -21,6 +21,7 @@ export default function ArticleCard(props) {
     handleComment,
     createdAt,
     tags = [],
+    imageUrl,
   } = props;
 
   const label = (
@@ -53,7 +54,6 @@ export default function ArticleCard(props) {
           border: isFavorite ? '0.8px solid #fadb14' : 'none',
           borderRadius: 8,
         }}
-        // Actions stay the same
         actions={[
           <span key="fav" onClick={() => onToggleFavorite(id)} style={{ cursor: 'pointer' }}>
             {isFavorite ? <StarFilled style={{ color: '#fadb14' }} /> : <StarOutlined />}
@@ -83,8 +83,24 @@ export default function ArticleCard(props) {
           </div>
         }
       >
+        {/* Display image if available */}
+        {imageUrl && (
+          <div style={{ marginBottom: 12 }}>
+            <img
+              src={imageUrl}
+              alt="Article"
+              style={{
+                width: '100%',
+                maxHeight: '250px',
+                objectFit: 'cover',
+                borderRadius: '6px',
+              }}
+            />
+          </div>
+        )}
+
         {createdAt && (
-          <div style={{ marginTop: 12, fontSize: '0.8rem', color: '#888', textAlign: 'right' }}>
+          <div style={{ fontSize: '0.8rem', color: '#888', textAlign: 'right' }}>
             {formatDate(createdAt)}
           </div>
         )}
@@ -92,7 +108,7 @@ export default function ArticleCard(props) {
         <div className={`card-content ${comments && comments.length > 0 ? 'with-divider' : ''}`}>
           <p>{content}</p>
         </div>
-
+        
         {comments && comments.length > 0 && (
           <Collapse
             ghost

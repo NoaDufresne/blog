@@ -5,7 +5,6 @@ body {
 #root {
   width: 100%;
   margin: 0 auto;
-  text-align: center;
 }
 
 .app-wrapper {
@@ -19,7 +18,9 @@ body {
   }
 }
 
-
+.no-articles {
+  color: #0e1c2b;
+}
 
 .container {
   display: flex;
@@ -44,6 +45,28 @@ h1 {
   color: white;
   border-radius: 4px;
   margin: 0;
+}
+
+.button-create.ant-btn-primary:hover,
+.button-create.ant-btn-primary:focus {
+  background-color: #c3dbf6 !important;
+  border-color: #22456d !important;
+  color: #22456d!important; 
+}
+
+.button-form {
+  background-color: #22456d; 
+  border-color: #0e1c2b;
+  color: white;
+  border-radius: 4px;
+  margin: 0;
+}
+
+.button-form.ant-btn-primary:hover,
+.button-form.ant-btn-primary:focus {
+  background-color: #c3dbf6 !important;
+  border-color: #22456d !important;
+  color: #22456d!important; 
 }
 
 .search-field {

@@ -1,26 +1,37 @@
 import React from 'react';
-import { Input } from 'antd';
+import { Input, Form } from 'antd';
 
-export default function ArticleForm({ title, content, handleChange }) {
+export default function ArticleForm({ title, content, handleChange, titleError, contentError }) {
   return (
-    <form>
-      <label htmlFor="title">Titre</label>
-      <Input
-        name="title"
-        placeholder="Article title"
-        aria-label="Title"
-        value={title}
-        onChange={handleChange}
-      />
-      <label htmlFor="content">Contenu</label>
-      <Input.TextArea
-        name="content"
-        placeholder="Content of my article..."
-        aria-label="Content"
-        value={content}
-        onChange={handleChange}
-        rows={6}
-      />
-    </form>
+    <Form layout="vertical">
+      <Form.Item
+        label="Titre"
+        validateStatus={titleError ? 'error' : ''}
+        help={titleError ? 'You must enter a title.' : ''}
+      >
+        <Input
+          name="title"
+          placeholder="Article title"
+          aria-label="Title"
+          value={title}
+          onChange={handleChange}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label="Contenu"
+        validateStatus={contentError ? 'error' : ''}
+        help={contentError ? 'You must enter some content.' : ''}
+      >
+        <Input.TextArea
+          name="content"
+          placeholder="Content of my article..."
+          aria-label="Content"
+          value={content}
+          onChange={handleChange}
+          rows={6}
+        />
+      </Form.Item>
+    </Form>
   );
 }

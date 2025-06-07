@@ -14,6 +14,9 @@ const ArticleModal = (props) => {
   const [title, setTitle] = useState(selectedArticle ? selectedArticle.title : '');
   const [content, setContent] = useState(selectedArticle ? selectedArticle.content : '');
   const [tags, setTags] = useState(selectedArticle ? selectedArticle.tags || [] : []);
+  const [titleError, setTitleError] = useState(false);
+  const [contentError, setContentError] = useState(false);
+
 
   useEffect(() => {
     if (selectedArticle) {
@@ -45,25 +48,45 @@ const ArticleModal = (props) => {
   };
 
   const handleSubmit = (e) => {
-    let article = {
-      title,
-      content,
-      tags,
-      createdAt: serverTimestamp(),
-      comments: []
+      let hasError = false;
+
+      if (!title.trim()) {
+        setTitleError(true);
+        hasError = true;
+      } else {
+        setTitleError(false);
+      }
+
+      if (!content.trim()) {
+        setContentError(true);
+        hasError = true;
+      } else {
+        setContentError(false);
+      }
+
+      if (hasError) return;
+
+      let article = {
+        title,
+        content,
+        createdAt: serverTimestamp(),
+        comments: [],
+        tags,
+      };
+
+      if (props.selectedArticle) {
+        article.id = props.selectedArticle.id;
+        article.comments = props.selectedArticle.comments;
+        updateArticle(article);
+      } else {
+        addArticle(article);
+      }
+
+      setTitle('');
+      setContent('');
+      props.handleClose();
     };
-    if (selectedArticle) {
-      article.id = selectedArticle.id;
-      article.comments = selectedArticle.comments || [];
-      updateArticle(article);
-    } else {
-      addArticle(article);
-    }
-    setContent('');
-    setTitle('');
-    setTags([]);
-    props.handleClose();
-  };
+
 
   return (
     <Modal
@@ -71,13 +94,18 @@ const ArticleModal = (props) => {
       open={props.isVisible}
       onCancel={props.handleClose}
       footer={
-        <Button key="submit" type="primary" onClick={handleSubmit}>
+        <Button className="button-form" key="submit" type="primary" onClick={handleSubmit}>
           Valider
         </Button>
       }
       width={800}
     >
-      <ArticleForm title={title} content={content} handleChange={handleChange} />
+      <ArticleForm
+        title={title}
+        content={content} 
+        handleChange={handleChange}
+        titleError={titleError}
+        contentError={contentError} />
       <div style={{ marginTop: 24 }}>
         <label htmlFor="tags-select" style={{ fontWeight: 'bold', display: 'block', marginBottom: 8 }}>
           Select up to 3 tags

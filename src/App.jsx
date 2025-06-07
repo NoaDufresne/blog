@@ -18,7 +18,6 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // les Favorites ici
   const [favoriteIds, setFavoriteIds] = useState(() => {
     const stored = localStorage.getItem('favoriteArticles');
     return stored ? JSON.parse(stored) : [];
@@ -139,6 +138,7 @@ function App() {
                   setSelectedArticle(article);
                   setIsArticleModalVisible(true);
                 }}
+                
               />
             ))
           )}
